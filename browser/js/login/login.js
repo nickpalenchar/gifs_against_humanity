@@ -1,7 +1,14 @@
 app.config(function ($stateProvider) {
 
-  $stateProvider.state('login', {
-    url: '/',
+
+  $stateProvider
+    .state('waitingRoom', {
+      url: '/',
+      templateUrl: 'js/login/waitingRoom.html'
+    })
+
+    .state('waitingRoom.login', {
+    // url: '/',
     templateUrl: 'js/login/login.html',
     controller: 'LoginCtrl'
   });
@@ -71,16 +78,6 @@ app.controller('LoginCtrl', function ($scope, Socket, $window, AuthService, $sta
     $scope.userCount++;
     Socket.emit('newPlayer', $scope.allPlayers, $scope.userCount, me._id);
 
-    //UserFactory.createUser($scope.newUser, true)
-    //    .then(function (user) {
-    //        user.currentStatus = "PLAYER";
-    //        $scope.userCount += 1;
-    //        $scope.allPlayers.push(user);
-    //        me = user;
-    //        console.log("new count", $scope.userCount);
-    //        // if ($scope.userCount===6){ $scope.roomReady= true}
-    //        Socket.emit('newPlayer', $scope.allPlayers, $scope.userCount, me._id);
-    //    })
   };
   Socket.on('removePlayer', function (removedId) {
     if (gameStarted) return;
